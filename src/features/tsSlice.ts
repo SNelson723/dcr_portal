@@ -80,11 +80,14 @@ const tsSlice = createSlice({
 
       state.currentDays = currentWeek;
     },
-    setTSTotals: (state, action: PayloadAction<TSTotals>) => {
+    setTSTotals: (state, action: PayloadAction<TSTotals | null>) => {
       state.totals = action.payload;
     },
     setRefresh: (state, action: PayloadAction<boolean>) => {
       state.refresh = action.payload;
+    },
+    setRowData: (state, action: PayloadAction<TSRowData[]>) => {
+      state.rowData = action.payload;
     },
     setSelectedDay: (state, action: PayloadAction<TSRowData>) => {
       state.selectedDay = action.payload;
@@ -187,5 +190,6 @@ export const {
   setSelectedWeekEnding,
   setWorkOrder,
   setRemarks,
+  setRowData,
 } = tsSlice.actions;
 export default tsSlice.reducer;

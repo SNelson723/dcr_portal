@@ -3,27 +3,49 @@ import { useAppDispatch } from "../../hooks";
 import { useToast } from "../../components/toasts/hooks/useToast";
 import { useTSCtx } from "./hooks";
 import type { JsonError } from "../../interfaces/jsonResp";
-import { setSelectedWeekEnding } from "../../features/tsSlice";
+import {
+  setRowData,
+  setSelectedWeekEnding,
+  setTSTotals,
+} from "../../features/tsSlice";
 import { getWeekEndingData } from "../../api/timesheet";
 
 // Components
 import UserTitleCard from "./UserTitleCard";
 import SingleSelect from "../../components/inputs/SingleSelect";
 import RowInputCard from "./RowInputCard";
-import DayCardList from "./DayCardList";
+import DayRowList from "./DayRowList";
+import type { TSTotals, WEJsonResp } from "../../interfaces/timesheet";
 
 const TimeSheetPage = () => {
+  const ctx = useTSCtx();
   const toast = useToast();
   const dispatch = useAppDispatch();
-  const ctx = useTSCtx();
 
   useEffect(() => {
     if (ctx.selectedWE) {
+      dispatch(setRowData([]));
+      dispatch(setTSTotals(null));
+      
       getWeekEndingData(ctx.url, ctx.token, ctx.userid, ctx.selectedWE.date)
         .then((resp) => {
-          const j = resp.data;
-          if (j.error === 0) {
-            console.log("week ending data: ", j);
+          const j: WEJsonResp = resp.data;
+          if (j.error === 0 && j.week_days.length) {
+            dispatch(setRowData(j.week_days));
+            const totals: TSTotals = j.week_days.reduce(
+              (acc, curr) => {
+                acc.site += parseInt(curr.site_time);
+                acc.travel += parseInt(curr.travel_time);
+                acc.total += parseInt(curr.total_time);
+                return acc;
+              },
+              {
+                site: 0,
+                travel: 0,
+                total: 0,
+              },
+            );
+            dispatch(setTSTotals(totals));
           }
         })
         .catch((err: JsonError) => toast.error(err.message));
@@ -52,7 +74,7 @@ const TimeSheetPage = () => {
         </div>
         <RowInputCard />
       </div>
-      <DayCardList />
+      <DayRowList />
     </div>
   );
 };

@@ -1,7 +1,7 @@
 import { useAppSelector } from "../../hooks";
 
 export const useTSCtx = () => {
-  const { weekEndings, selectedWE, rowData } = useAppSelector(
+  const { weekEndings, selectedWE, rowData, selectedDay } = useAppSelector(
     (state) => state.timesheet,
   );
   const { userid } = useAppSelector((state) => state.user);
@@ -9,6 +9,7 @@ export const useTSCtx = () => {
 
   return {
     rowData,
+    selectedDay,
     selectedWE,
     token,
     url,
