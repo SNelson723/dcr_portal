@@ -1,11 +1,15 @@
-import { useAppSelector, useAppDispatch } from "../../hooks";
+import { useAppSelector, useAppDispatch } from "../../../hooks";
 
-import BasicInput from "../../components/inputs/BasicInput";
-import TimePicker from "../../components/inputs/TimePicker";
-import SingleSelect from "../../components/inputs/SingleSelect";
-import { calcDayHours } from "../../utils";
-import { setEndTime, setSelectedActivity, setStartTime } from "../../features/tsSlice";
-import { activities } from "../../features";
+import BasicInput from "../../../components/inputs/BasicInput";
+import TimePicker from "../../../components/inputs/TimePicker";
+import SingleSelect from "../../../components/inputs/SingleSelect";
+import { calcDayHours } from "../../../utils";
+import {
+  setEndTime,
+  setSelectedActivity,
+  setStartTime,
+} from "../../../features/tsSlice";
+import { activities } from "../../../features";
 
 const RowInputCard = () => {
   const dispatch = useAppDispatch();
@@ -28,7 +32,7 @@ const RowInputCard = () => {
 
   const handleLocationSelect = (location: string | number) => {
     setSelectedActivity(location.toString());
-  };  
+  };
 
   const allowEdit = () => {
     return true;
@@ -94,10 +98,10 @@ const RowInputCard = () => {
         </div>
         <BasicInput label="WO / SO #" text="" setText={() => {}} id={7} />
         <BasicInput label="Remarks" text="" setText={() => {}} id={8} />
-          <div className="grid grid-cols-2 gap-2">
-            <button className="btn-themeAmber">Clear</button>
-            <button className="btn-themeIndigo">Submit</button>
-          </div>
+        <div className="grid grid-cols-2 gap-2">
+          <button className="btn-themeAmber">Clear</button>
+          <button className="btn-themeIndigo">Submit</button>
+        </div>
       </div>
     </div>
   );

@@ -3,19 +3,15 @@ import { useAppDispatch } from "../../hooks";
 import { useToast } from "../../components/toasts/hooks/useToast";
 import { useTSCtx } from "./hooks";
 import type { JsonError } from "../../interfaces/jsonResp";
-import {
-  setRowData,
-  setSelectedWeekEnding,
-  setTSTotals,
-} from "../../features/tsSlice";
+import { setRowData, setTSTotals } from "../../features/tsSlice";
 import { getWeekEndingData } from "../../api/timesheet";
 
 // Components
-import UserTitleCard from "./UserTitleCard";
-import SingleSelect from "../../components/inputs/SingleSelect";
-import RowInputCard from "./RowInputCard";
+import UserTitleCard from "./controls/UserTitleCard";
+import RowInputCard from "./controls/RowInputCard";
 import DayRowList from "./DayRowList";
 import type { TSTotals, WEJsonResp } from "../../interfaces/timesheet";
+import WeekEnding from "./controls/WeekEnding";
 
 const TimeSheetPage = () => {
   const ctx = useTSCtx();
@@ -26,7 +22,7 @@ const TimeSheetPage = () => {
     if (ctx.selectedWE) {
       dispatch(setRowData([]));
       dispatch(setTSTotals(null));
-      
+
       getWeekEndingData(ctx.url, ctx.token, ctx.userid, ctx.selectedWE.date)
         .then((resp) => {
           const j: WEJsonResp = resp.data;
@@ -52,28 +48,15 @@ const TimeSheetPage = () => {
     }
   }, [ctx.selectedWE]);
 
-  const handleWESelect = (we: string | number) => {
-    const selected = ctx.weekEndings.find((wk) => wk.date === we.toString());
-    if (selected) {
-      dispatch(setSelectedWeekEnding(selected));
-    }
-  };
-
   return (
     <div className="min-h-[calc(100vh-2rem)] max-h-[calc(100vh-2rem)] overflow-hidden grid grid-cols-[1fr_3fr] gap-4">
+      {/* Left Controls */}
       <div className="flex flex-col gap-4">
         <UserTitleCard />
-        <div className="bg-custom-white rounded-lg shadow-indigo-200/50 shadow-md p-2">
-          <SingleSelect
-            label="Week Ending"
-            data={ctx.weekEndings}
-            displayKey="date"
-            valueKey="date"
-            onSelect={handleWESelect}
-          />
-        </div>
+        <WeekEnding />
         <RowInputCard />
       </div>
+      {/* Day Row Grid on the Right */}
       <DayRowList />
     </div>
   );

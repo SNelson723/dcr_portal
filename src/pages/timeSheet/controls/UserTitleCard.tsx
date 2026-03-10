@@ -1,11 +1,11 @@
-import { useAppSelector } from "../../hooks";
+import { useAppSelector } from "../../../hooks";
 import { UserCircleIcon } from "@heroicons/react/24/outline";
 
 const UserTitleCard = () => {
   const { email, role, userid, lastName, firstName } = useAppSelector(
     (state) => state.user,
   );
-  
+
   return (
     <div className="flex items-center bg-indigo-800 text-custom-white p-4 rounded-lg shadow-indigo-200/50 shadow-md">
       <UserCircleIcon className="w-24 h-24 stroke-bkg" />
