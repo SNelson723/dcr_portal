@@ -9,7 +9,7 @@ const DayRowList = () => {
   return (
     <div className="rounded-lg">
       {/* Column Headers */}
-      <div className="grid grid-cols-10 bg-indigo-500 text-custom-white rounded-t-lg py-0.5 font-medium">
+      <div className="grid grid-cols-10 bg-indigo-800 text-custom-white rounded-t-lg py-0.5 font-medium">
         <div className="px-2 border-r">Date</div>
         <div className="px-2 border-r">Location</div>
         <div className="px-2 border-r">Call Type</div>

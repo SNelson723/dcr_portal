@@ -9,6 +9,7 @@ export type UserLoginResp = {
   role: string;
   userid: number;
   is_admin: boolean;
+  dob: string;
 };
 
 export interface LoginResp {

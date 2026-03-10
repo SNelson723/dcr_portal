@@ -10,6 +10,7 @@ interface UserState {
   role: string;
   userid: number;
   isAdmin: boolean;
+  dob: string;
 }
 
 const initialState: UserState = {
@@ -21,6 +22,7 @@ const initialState: UserState = {
   role: "",
   userid: 0,
   isAdmin: false,
+  dob: "",
 };
 
 export const userSlice = createSlice({
@@ -34,7 +36,7 @@ export const userSlice = createSlice({
       state.pwInput = action.payload;
     },
     setUserData: (state, action: PayloadAction<UserLoginResp>) => {
-      const { email, firstname, lastname, role, userid, is_admin } =
+      const { email, firstname, lastname, role, userid, is_admin, dob } =
         action.payload;
       state.email = email;
       state.firstName = firstname;
@@ -42,6 +44,7 @@ export const userSlice = createSlice({
       state.role = role;
       state.userid = userid;
       state.isAdmin = is_admin;
+      state.dob = dob
     },
     resetUserState: () => initialState,
   },

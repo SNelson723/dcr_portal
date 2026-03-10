@@ -16,6 +16,7 @@ import type {
   WEJsonResp,
 } from "../../interfaces/timesheet";
 import WeekEnding from "./controls/WeekEnding";
+import Holidays from "./controls/Holidays";
 
 const TimeSheetPage = () => {
   const ctx = useTSCtx();
@@ -32,18 +33,20 @@ const TimeSheetPage = () => {
           const j: WEJsonResp = resp.data;
           if (j.error === 0 && j.week_days.length) {
             const dates = new Set(j.week_days.map((d) => d.work_date));
-            
-            const datesArr = Array.from(dates).sort((a, b) => new Date(a).getTime() - new Date(b).getTime());
+
+            const datesArr = Array.from(dates).sort(
+              (a, b) => new Date(a).getTime() - new Date(b).getTime(),
+            );
             const sortedDays: TSRowData[] = [];
 
             datesArr.forEach((date) => {
-              const filtered = [...j.week_days].filter(
-                (d) => d.work_date === date,
-              ).sort((a, b) => {
-                const left = parseInt(a.start_time.replace(":", ""));
-                const right = parseInt(b.start_time.replace(":", ""));
-                return left - right;
-              });
+              const filtered = [...j.week_days]
+                .filter((d) => d.work_date === date)
+                .sort((a, b) => {
+                  const left = parseInt(a.start_time.replace(":", ""));
+                  const right = parseInt(b.start_time.replace(":", ""));
+                  return left - right;
+                });
               sortedDays.push(...filtered);
             });
 
@@ -70,15 +73,17 @@ const TimeSheetPage = () => {
   }, [ctx.refresh, ctx.selectedWE]);
 
   return (
-    <div className="min-h-[calc(100vh-2rem)] max-h-[calc(100vh-2rem)] overflow-hidden grid grid-cols-[1fr_3fr] gap-4">
+    <div className="min-h-[calc(100vh-2rem)] max-h-[calc(100vh-2rem)] overflow-hidden space-y-4">
       {/* Left Controls */}
-      <div className="flex flex-col gap-4">
+      <div className="grid grid-cols-[25%_25%_47.5%] gap-4">
         <UserTitleCard />
         <WeekEnding />
-        <RowInputCard />
+        <Holidays />
       </div>
-      {/* Day Row Grid on the Right */}
-      <DayRowList />
+      <div className="grid grid-cols-[25%_73.7%] gap-4">
+        <RowInputCard />
+        <DayRowList />
+      </div>
     </div>
   );
 };

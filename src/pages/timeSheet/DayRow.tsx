@@ -23,7 +23,7 @@ const DayRow = ({ data }: DayCardProps) => {
     if (ctx.selectedDay && ctx.selectedDay.id === id) {
       return "bg-amber-200 font-medium";
     }
-    return "bg-custom-white odd:bg-indigo-200";
+    return "bg-custom-white even:bg-indigo-200";
   };
 
   return (
