@@ -74,7 +74,6 @@ const TimeSheetPage = () => {
 
   return (
     <div className="min-h-[calc(100vh-2rem)] max-h-[calc(100vh-2rem)] overflow-hidden space-y-4">
-      {/* Left Controls */}
       <div className="grid grid-cols-[25%_25%_47.5%] gap-4">
         <UserTitleCard />
         <WeekEnding />

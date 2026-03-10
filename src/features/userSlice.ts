@@ -1,5 +1,5 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
-import type { UserLoginResp } from "../interfaces/jsonResp";
+import type { User } from "../interfaces/jsonResp";
 
 interface UserState {
   emailInput: string;
@@ -35,7 +35,7 @@ export const userSlice = createSlice({
     setPwInput: (state, action: PayloadAction<string>) => {
       state.pwInput = action.payload;
     },
-    setUserData: (state, action: PayloadAction<UserLoginResp>) => {
+    setUserData: (state, action: PayloadAction<User>) => {
       const { email, firstname, lastname, role, userid, is_admin, dob } =
         action.payload;
       state.email = email;
