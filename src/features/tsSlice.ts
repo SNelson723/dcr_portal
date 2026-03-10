@@ -89,8 +89,34 @@ const tsSlice = createSlice({
     setRowData: (state, action: PayloadAction<TSRowData[]>) => {
       state.rowData = action.payload;
     },
-    setSelectedDay: (state, action: PayloadAction<TSRowData>) => {
-      state.selectedDay = action.payload;
+    setSelectedDay: (state, action: PayloadAction<TSRowData| null>) => {
+      const x = action.payload;
+      state.selectedDay = x;
+      if (x) {
+        // populate inputs
+        state.selectedDate = x.work_date;
+        state.selectedActivity = x.location;
+        state.startTime = x.start_time;
+        state.endTime = x.end_time;
+        state.siteTime = x.site_time;
+        state.travelTime = x.travel_time;
+        state.callType = x.call_type;
+        state.callTypeValue = x.call_type;
+        state.workOrder = x.work_order || "";
+        state.remarks = x.remarks || "";
+      } else {
+        // empty the inputs
+        state.selectedDate = "";
+        state.selectedActivity = "";
+        state.startTime = "08:30";
+        state.endTime = "08:30";
+        state.siteTime = "";
+        state.travelTime = "";
+        state.callType = "";
+        state.callTypeValue = "";
+        state.workOrder = "";
+        state.remarks = "";
+      }
     },
     addDay: (state, action: PayloadAction<TSRowData>) => {
       const days = [...state.rowData];

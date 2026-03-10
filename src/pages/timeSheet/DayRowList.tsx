@@ -25,7 +25,7 @@ const DayRowList = () => {
       {/* Day Rows Body */}
       <div className="rounded-b-lg max-h-[50vh] overflow-hidden overflow-y-auto no-scrollbar">
         {rowData.map((row) => (
-          <DayRow key={row.work_date} data={row} />
+          <DayRow key={row.id} data={row} />
         ))}
       </div>
 

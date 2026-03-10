@@ -12,7 +12,11 @@ const DayRow = ({ data }: DayCardProps) => {
   const dispatch = useAppDispatch();
 
   const handleDaySelect = (day: TSRowData) => {
-    dispatch(setSelectedDay(day));
+    if (ctx.selectedDay && ctx.selectedDay.id === day.id) {
+      dispatch(setSelectedDay(null));
+    } else {
+      dispatch(setSelectedDay(day));
+    }
   };
 
   const bgColor = (id: number) => {

@@ -11,24 +11,49 @@ const TimePicker = ({ label, text, setText, id }: TimePickerProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [hours, setHours] = useState<string>("08");
   const [minutes, setMinutes] = useState<string>("30");
+  const [refresh, setRefresh] = useState<boolean>(false);
   const ref = useRef<HTMLDivElement>(null);
 
   // Format display time (e.g., "09:30")
   const displayTime = `${hours.padStart(2, "0")}:${minutes.padStart(2, "0")}`;
 
-  // Parse text value on mount/change
-  useEffect(() => {
+  useEffect(()=> {
     if (text && text.includes(":")) {
-      const [h, m] = text.split(":");
-      setHours(h || "09");
+      const [h, m] = text.replace(/AM|PM/g, "").split(":");
+      setHours(h || "08");
       setMinutes(m || "30");
     }
-  }, [text]);
+  }, [text])
 
-  // Update parent when time changes
   useEffect(() => {
-    setText(`${hours.padStart(2, "0")}:${minutes.padStart(2, "0")}`);
-  }, [hours, minutes, setText]);
+    if (refresh){
+      setText(displayTime);
+      setRefresh(false);
+    }
+  }, [refresh]);
+
+  useEffect(() => {
+    if (!refresh) {
+      setRefresh(true);
+    }
+  }, [hours, minutes]);
+  // useEffect(() => {
+  //   if (text && text.includes(":")) {
+  //     const [h, m] = text.replace(/AM|PM/g, "").split(":");
+  //     console.log("Parsed time:", { h, m });
+  //     setHours(h || "09");
+  //     setMinutes(m || "30");
+  //     setRefresh(false);
+  //   }
+  // }, [text, hours, minutes]);
+  
+  // // Update parent when time changes
+  // useEffect(() => {
+  //   if (refresh) {
+  //     setText(`${hours.padStart(2, "0")}:${minutes.padStart(2, "0")}`);
+  //     setRefresh(true);
+  //   }
+  // }, [!refresh]);
 
   // Close dropdown on outside click
   const handleClickOutside = useCallback((event: MouseEvent) => {

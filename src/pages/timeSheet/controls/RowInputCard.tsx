@@ -81,13 +81,13 @@ const RowInputCard = () => {
         <div className="grid grid-cols-2 gap-2">
           <TimePicker
             label="Start Time"
-            text={ts.startTime}
+            text={ts.startTime.replace(/AM|PM/g, "")}
             setText={handleStartTime}
             id="start-time"
           />
           <TimePicker
             label="End Time"
-            text={ts.endTime}
+            text={ts.endTime.replace(/AM|PM/g, "")}
             setText={handleEndTime}
             id="end-time"
           />
