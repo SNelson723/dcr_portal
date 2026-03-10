@@ -1,17 +1,37 @@
-import { useAppSelector, useAppDispatch } from "../../hooks";
+import { useEffect } from "react";
+import { useAppDispatch } from "../../hooks";
+import { useToast } from "../../components/toasts/hooks/useToast";
+import { useTSCtx } from "./hooks";
+import type { JsonError } from "../../interfaces/jsonResp";
+import { setSelectedWeekEnding } from "../../features/tsSlice";
+import { getWeekEndingData } from "../../api/timesheet";
+
+// Components
+import UserTitleCard from "./UserTitleCard";
 import SingleSelect from "../../components/inputs/SingleSelect";
 import RowInputCard from "./RowInputCard";
-import UserTitleCard from "./UserTitleCard";
-import { setSelectedWeekEnding } from "../../features/tsSlice";
 import DayCardList from "./DayCardList";
 
 const TimeSheetPage = () => {
+  const toast = useToast();
   const dispatch = useAppDispatch();
-  const weekEndings = useAppSelector((state) => state.timesheet.weekEndings);
+  const ctx = useTSCtx();
+
+  useEffect(() => {
+    if (ctx.selectedWE) {
+      getWeekEndingData(ctx.url, ctx.token, ctx.userid, ctx.selectedWE.date)
+        .then((resp) => {
+          const j = resp.data;
+          if (j.error === 0) {
+            console.log("week ending data: ", j);
+          }
+        })
+        .catch((err: JsonError) => toast.error(err.message));
+    }
+  }, [ctx.selectedWE]);
 
   const handleWESelect = (we: string | number) => {
-    // dispatch(setSelectedWeekEnding(we.toString()));
-    const selected = weekEndings.find((wk) => wk.date === we.toString());
+    const selected = ctx.weekEndings.find((wk) => wk.date === we.toString());
     if (selected) {
       dispatch(setSelectedWeekEnding(selected));
     }
@@ -24,7 +44,7 @@ const TimeSheetPage = () => {
         <div className="bg-custom-white rounded-lg shadow-indigo-200/50 shadow-md p-2">
           <SingleSelect
             label="Week Ending"
-            data={weekEndings}
+            data={ctx.weekEndings}
             displayKey="date"
             valueKey="date"
             onSelect={handleWESelect}

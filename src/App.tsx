@@ -2,10 +2,6 @@ import { useEffect } from "react";
 import { useAppSelector, useAppDispatch } from "./hooks";
 import { useNavigate, Outlet } from "react-router";
 
-import Login from "./pages/Login";
-import NavBar from "./components/nav";
-import TitleBar from "./components/titlebar";
-import bg from "./assets/timesheet-bg.png";
 import type { WeekEnding } from "./interfaces/timesheet";
 import { formatDate } from "./utils";
 import {
@@ -13,6 +9,11 @@ import {
   setSelectedWeekEnding,
   setWeekEndings,
 } from "./features/tsSlice";
+
+import Login from "./pages/Login";
+import NavBar from "./components/nav";
+import TitleBar from "./components/titlebar";
+import bg from "./assets/timesheet-bg.png";
 
 const App = () => {
   const navigate = useNavigate();

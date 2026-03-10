@@ -28,3 +28,9 @@ export interface TSTotals {
   travel: number;
   total: number;
 }
+
+export interface WEJsonResp {
+  error: number;
+  success: boolean;
+  week_days: TSRowData[];
+}
