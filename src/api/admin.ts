@@ -1,5 +1,5 @@
 import axios from "axios";
-import type { User } from "../interfaces/jsonResp";
+import type { Employee } from "../interfaces/jsonResp";
 
 export const getAllEmployees = async (url: string, token: string) => {
   const json = await axios({
@@ -16,9 +16,8 @@ export const getAllEmployees = async (url: string, token: string) => {
 export const createEmployee = async (
   url: string,
   token: string,
-  user: User,
-  username: string,
-  password: string,
+  user: Employee,
+  password:string,
 ) => {
   const json = await axios({
     method: "POST",
@@ -34,9 +33,8 @@ export const createEmployee = async (
       role: user.role,
       dob: user.dob,
       is_admin: user.is_admin,
-      dcr_email: user.email,
+      dcr_email: user.dcr_email,
       password: password,
-      username: username,
     },
   });
   return json;

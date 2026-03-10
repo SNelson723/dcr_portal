@@ -12,9 +12,15 @@ import {
 import { resetTSState } from "../../features/tsSlice";
 import { resetUserState } from "../../features/userSlice";
 
-import { HomeIcon, UserIcon, CalendarIcon, CheckBadgeIcon } from "@heroicons/react/16/solid";
+import {
+  HomeIcon,
+  UserIcon,
+  CalendarIcon,
+  CheckBadgeIcon,
+} from "@heroicons/react/16/solid";
 import { navItems, type Navigation } from "../../features";
 import SignOutIcon from "../../icons/SignOutIcon";
+import { resetAdminState } from "../../features/adminSlice";
 
 const iconMap: Record<string, React.ComponentType<any>> = {
   home: HomeIcon,
@@ -99,6 +105,7 @@ const NavBar = () => {
     dispatch(resetNavState());
     dispatch(resetTSState());
     dispatch(resetUserState());
+    dispatch(resetAdminState());
   };
 
   // const itemHovering = (name: string) => {
@@ -109,7 +116,7 @@ const NavBar = () => {
   const adminCheck = (adminOnly: boolean) => {
     if (adminOnly && !user.isAdmin) {
       return false;
-    } 
+    }
     return true;
   };
 

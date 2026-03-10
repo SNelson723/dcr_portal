@@ -27,9 +27,10 @@ export interface Employee {
   role: string;
   dcr_email: string;
   is_admin: boolean;
-  dob:string;
+  dob: string;
   password_reset: number;
   security_question_reset: number;
+  username: string;
 }
 
 export interface EmployeeListResp {

@@ -1,12 +1,16 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { Employee } from "../interfaces/jsonResp";
 
-type MainForm = 0 | 1 | 2 | 3 | 4 | 5;
+export type MainForm = 0 | 1 | 2 | 3 | 4 | 5;
 
 interface AdminState {
   mainForm: MainForm;
   employees: Employee[];
   employeeInfo: Employee;
+  adminRefresh: boolean;
+  pw: string;
+  pwConfirm: string;
+  selectedEmployee: Employee | null;
 }
 
 const defaultEmployee: Employee = {
@@ -19,12 +23,17 @@ const defaultEmployee: Employee = {
   dob: "",
   password_reset: 0,
   security_question_reset: 0,
+  username: "",
 };
 
 const initialState: AdminState = {
   mainForm: 0,
   employees: [],
   employeeInfo: defaultEmployee,
+  adminRefresh: true,
+  pw: "",
+  pwConfirm: "",
+  selectedEmployee: defaultEmployee,
 };
 
 const adminSlice = createSlice({
@@ -53,6 +62,18 @@ const adminSlice = createSlice({
     resetEmployeeInfo: (state) => {
       state.employeeInfo = defaultEmployee;
     },
+    setAdminRefresh: (state, action: PayloadAction<boolean>) => {
+      state.adminRefresh = action.payload;
+    },
+    setPw: (state, action: PayloadAction<string>) => {
+      state.pw = action.payload;
+    },
+    setPwConfirm: (state, action: PayloadAction<string>) => {
+      state.pwConfirm = action.payload;
+    },
+    setSelectedEmployee: (state, action: PayloadAction<Employee | null>) => {
+      state.selectedEmployee = action.payload;
+    },
     resetAdminState: () => initialState,
   },
 });
@@ -64,5 +85,9 @@ export const {
   setEmployeeInfoField,
   resetEmployeeInfo,
   resetAdminState,
+  setAdminRefresh,
+  setPw,
+  setPwConfirm,
+  setSelectedEmployee,
 } = adminSlice.actions;
 export default adminSlice.reducer;
