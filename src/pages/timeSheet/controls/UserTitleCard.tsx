@@ -7,7 +7,7 @@ const UserTitleCard = () => {
   );
 
   return (
-    <div className="flex items-center bg-indigo-800 text-custom-white p-4 rounded-lg shadow-indigo-200/50 shadow-md">
+    <div className="flex items-center bg-indigo-800 text-custom-white p-2 rounded-lg shadow-indigo-200/50 shadow-md">
       <UserCircleIcon className="w-24 h-24 stroke-bkg" />
       <div className="text-sm ml-3 space-y-1">
         <div className="flex gap-2">

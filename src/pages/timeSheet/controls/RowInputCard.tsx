@@ -1,23 +1,37 @@
-import { useAppSelector, useAppDispatch } from "../../../hooks";
+import { useAppDispatch } from "../../../hooks";
+import { useRowData, useTSCtx } from "../hooks";
+import { useToast } from "../../../components/toasts/hooks/useToast";
 
 import BasicInput from "../../../components/inputs/BasicInput";
 import TimePicker from "../../../components/inputs/TimePicker";
 import SingleSelect from "../../../components/inputs/SingleSelect";
 import { calcDayHours } from "../../../utils";
 import {
+  resetTSInputs,
+  setCallType,
   setEndTime,
+  setRefresh,
+  setRemarks,
   setSelectedActivity,
+  setSelectedDate,
+  setSiteTime,
   setStartTime,
+  setTravelTime,
+  setWorkOrder,
 } from "../../../features/tsSlice";
-import { activities } from "../../../features";
+import { activities, callTypes } from "../../../features";
+import { addWeekDay, deleteDay, updateWeekDay } from "../../../api/timesheet";
+import type { JsonError } from "../../../interfaces/jsonResp";
 
 const RowInputCard = () => {
+  const ctx = useTSCtx();
+  const toast = useToast();
   const dispatch = useAppDispatch();
-  const ts = useAppSelector((state) => state.timesheet);
+  const rowData = useRowData(ctx.selectedDay ? ctx.selectedDay.id : 0);
 
   const showHours = () => {
-    if (ts.startTime && ts.endTime) {
-      return calcDayHours(ts.startTime, ts.endTime);
+    if (ctx.startTime && ctx.endTime) {
+      return calcDayHours(ctx.startTime, ctx.endTime);
     }
     return "";
   };
@@ -31,29 +45,102 @@ const RowInputCard = () => {
   };
 
   const handleLocationSelect = (location: string | number) => {
-    setSelectedActivity(location.toString());
+    dispatch(setSelectedActivity(location.toString()));
+  };
+
+  const handleCallTypeSelect = (ct: string | number) => {
+    dispatch(setCallType(ct.toString()));
   };
 
   const allowEdit = () => {
     return true;
   };
 
+  const handleTextChange = (x: string, action: string) => {
+    if (action === "site") {
+      dispatch(setSiteTime(x));
+    } else if (action === "travel") {
+      dispatch(setTravelTime(x));
+    } else if (action === "workOrder") {
+      dispatch(setWorkOrder(x));
+    } else if (action === "remarks") {
+      dispatch(setRemarks(x));
+    }
+  };
+
+  const handleDateSelect = (date: string | number) => {
+    dispatch(setSelectedDate(date.toString()));
+  };
+
+  const handleCrud = (type: "create" | "update" | "delete") => {
+    if (type === "create") {
+      // Call create API
+      addWeekDay(ctx.url, ctx.token, ctx.userid, rowData)
+        .then((resp) => {
+          const j = resp.data;
+          if (j.error === 0) {
+            dispatch(setRefresh(true));
+          }
+        })
+        .catch((err: JsonError) => toast.error(err.message));
+    } else if (type === "update") {
+      // Call update API
+      updateWeekDay(ctx.url, ctx.token, ctx.userid, rowData)
+        .then((resp) => {
+          const j = resp.data;
+          if (j.error === 0) {
+            dispatch(setRefresh(true));
+          }
+        })
+        .catch((err: JsonError) => toast.error(err.message));
+    } else {
+      // Call delete API
+      deleteDay(ctx.url, ctx.token, rowData.id, ctx.userid)
+        .then((resp) => {
+          const j = resp.data;
+          if (j.error === 0) {
+            dispatch(setRefresh(true));
+          }
+        })
+        .catch((err: JsonError) => toast.error(err.message));
+    }
+  };
+
+  const handleClear = () => {
+    dispatch(resetTSInputs());
+  };
+
+  const canSubmit = () => {
+    if (
+      ctx.selectedDate &&
+      ctx.selectedActivity &&
+      ctx.startTime &&
+      ctx.endTime
+    ) {
+      return "";
+    }
+    return "opacity-50 pointer-events-none";
+  };
+
   return (
-    <div className="bg-custom-white rounded-lg shadow-indigo-200/50 shadow-md">
-      <div className="bg-indigo-500 text-custom-white px-2 py-1 text-sm rounded-t-lg font-medium flex justify-between">
-        <div>Editing (1/2/2026)</div>
-        <div>W/E: (1/1/2026)</div>
+    <div className="bg-custom-white rounded-lg shadow-indigo-200/50 shadow-md p-2">
+      <div className="text-sm px-2 font-medium text-content/70">
+        * indicates required fields
       </div>
-      <div className="grid gap-2 p-2">
+      <div className="grid gap-0.5">
         <div className="grid grid-cols-2 gap-2 place-items-end">
           <SingleSelect
             id={1}
-            label="Date"
-            data={ts.currentDays}
+            label="Date *"
+            data={ctx.currentDays}
             displayKey="date"
             valueKey="date"
             innerClass="py-1.5"
             secondaryDisplayKey="day"
+            onSelect={handleDateSelect}
+            defaultQuery={ctx.selectedDate}
+            resetQuery={true}
+            // className={`${!allowEdit() && "pointer-events-none opacity-50"}`}
           />
           <BasicInput
             label="Total Hours"
@@ -65,42 +152,92 @@ const RowInputCard = () => {
         </div>
         <div className="grid grid-cols-2 gap-2 place-items-end">
           <SingleSelect
-            label="Location"
+            label="Location *"
             data={activities}
             displayKey="label"
             valueKey="label"
             innerClass="py-1.5"
             onSelect={handleLocationSelect}
-            defaultQuery={ts.selectedActivity}
+            defaultQuery={ctx.selectedActivity}
             resetQuery={true}
             className={`${!allowEdit() && "pointer-events-none opacity-50"}`}
             id={2}
           />
-          <BasicInput label="Call Type" text="" setText={() => {}} id={4} />
+          <SingleSelect
+            label="Call Type"
+            data={callTypes}
+            displayKey="value"
+            valueKey="value"
+            innerClass="py-1.5"
+            onSelect={handleCallTypeSelect}
+            defaultQuery={ctx.callType}
+            resetQuery={true}
+            className={`${!allowEdit() && "pointer-events-none opacity-50"}`}
+            id={3}
+          />
         </div>
         <div className="grid grid-cols-2 gap-2">
           <TimePicker
-            label="Start Time"
-            text={ts.startTime.replace(/AM|PM/g, "")}
+            label="Start Time *"
+            text={ctx.startTime.replace(/AM|PM/g, "")}
             setText={handleStartTime}
             id="start-time"
           />
           <TimePicker
-            label="End Time"
-            text={ts.endTime.replace(/AM|PM/g, "")}
+            label="End Time *"
+            text={ctx.endTime.replace(/AM|PM/g, "")}
             setText={handleEndTime}
             id="end-time"
           />
         </div>
         <div className="grid grid-cols-2 gap-2">
-          <BasicInput label="Site Time" text="" setText={() => {}} id={5} />
-          <BasicInput label="Travel Time" text="" setText={() => {}} id={6} />
+          <BasicInput
+            label="Site Time"
+            text={ctx.siteTime}
+            setText={handleTextChange}
+            action="site"
+            id={5}
+          />
+          <BasicInput
+            label="Travel Time"
+            text={ctx.travelTime}
+            setText={handleTextChange}
+            action="travel"
+            id={6}
+          />
         </div>
-        <BasicInput label="WO / SO #" text="" setText={() => {}} id={7} />
-        <BasicInput label="Remarks" text="" setText={() => {}} id={8} />
-        <div className="grid grid-cols-2 gap-2">
-          <button className="btn-themeAmber">Clear</button>
-          <button className="btn-themeIndigo">Submit</button>
+        <BasicInput
+          label="WO / SO #"
+          text={ctx.workOrder}
+          setText={handleTextChange}
+          action="workOrder"
+          id={7}
+        />
+        <BasicInput
+          label="Remarks"
+          text={ctx.remarks}
+          setText={handleTextChange}
+          action="remarks"
+          id={8}
+        />
+        <div className="grid grid-cols-2 gap-2 mt-1.5">
+          <button className="btn-themeAmber py-1.5" onClick={handleClear}>
+            Clear
+          </button>
+          <button
+            className={`btn-themeIndigo py-1.5 ${canSubmit()}`}
+            onClick={() => handleCrud(ctx.selectedDay ? "update" : "create")}
+          >
+            {ctx.selectedDay ? "Update" : "Create"}
+          </button>
+          {ctx.selectedDay ? (
+            <button
+              className="btn-themeRose py-1.5 col-span-2"
+              onClick={() => handleCrud("delete")}
+            >
+              Delete
+            </button>
+          ) : null}
         </div>
       </div>
     </div>

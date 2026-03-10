@@ -217,5 +217,6 @@ export const {
   setWorkOrder,
   setRemarks,
   setRowData,
+  resetTSInputs,
 } = tsSlice.actions;
 export default tsSlice.reducer;

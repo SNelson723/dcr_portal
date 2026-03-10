@@ -67,9 +67,15 @@
     transition-all duration-300 hover:shadow-md cursor-pointer text-center;
   }
 
-    .btn-themeAmber {
+  .btn-themeAmber {
     @apply text-white font-semibold py-2 px-8 rounded-lg bg-amber-500 
     hover:bg-amber-200 border-2 border-amber-500 hover:text-themeText 
+    transition-all duration-300 hover:shadow-md cursor-pointer text-center;
+  }
+
+  .btn-themeRose {
+    @apply text-white font-semibold py-2 px-8 rounded-lg bg-rose-500
+    hover:bg-rose-200 border-2 border-rose-500 hover:text-themeText 
     transition-all duration-300 hover:shadow-md cursor-pointer text-center;
   }
 

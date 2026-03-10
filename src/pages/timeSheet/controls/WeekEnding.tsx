@@ -1,6 +1,6 @@
 import { useTSCtx } from "../hooks";
 import { useAppDispatch } from "../../../hooks";
-import { setSelectedWeekEnding } from "../../../features/tsSlice";
+import { setRefresh, setSelectedWeekEnding } from "../../../features/tsSlice";
 
 import SingleSelect from "../../../components/inputs/SingleSelect";
 
@@ -12,6 +12,7 @@ const WeekEnding = () => {
     const selected = ctx.weekEndings.find((wk) => wk.date === we.toString());
     if (selected) {
       dispatch(setSelectedWeekEnding(selected));
+      dispatch(setRefresh(true));
     }
   };
 
@@ -25,8 +26,8 @@ const WeekEnding = () => {
         onSelect={handleWESelect}
       />
       <div className="grid grid-cols-2 gap-2 mt-2">
-        <button className="btn-themeAmber">Export</button>
-        <button className="btn-themeIndigo">Email</button>
+        <button className="btn-themeAmber py-1.5">Export</button>
+        <button className="btn-themeIndigo py-1.5">Email</button>
       </div>
     </div>
   );

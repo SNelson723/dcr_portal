@@ -6,6 +6,7 @@ import type { WeekEnding } from "./interfaces/timesheet";
 import { formatDate } from "./utils";
 import {
   setDefaultSunday,
+  setRefresh,
   setSelectedWeekEnding,
   setWeekEndings,
 } from "./features/tsSlice";
@@ -49,6 +50,7 @@ const App = () => {
         const sunday = formatDate(date.toISOString().split("T")[0]);
         dispatch(setDefaultSunday(sunday));
         dispatch(setSelectedWeekEnding({ date: sunday }));
+        dispatch(setRefresh(true))
       }
     }
 

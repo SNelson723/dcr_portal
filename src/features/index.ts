@@ -56,3 +56,15 @@ export const activities: SelectOption[] = [
   { label: "Holiday", value: "holiday" },
   { label: "PTO", value: "pto" },
 ];
+
+export const callTypes = [
+  { label: "PW", value: "Paperwork" },
+  { label: "PS", value: "Phone Support" },
+  { label: "TM", value: "Time & Material" },
+  { label: "PT", value: "Parts Admin" },
+  { label: "INS", value: "Install" },
+  { label: "TR", value: "Training" },
+  { label: "RM", value: "Repair" },
+  { label: "TST", value: "Testing" },
+  { label: "E", value: "Emergency Call" },
+];

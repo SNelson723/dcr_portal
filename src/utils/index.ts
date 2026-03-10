@@ -24,5 +24,9 @@ export const calcDayHours = (startTime: string, endTime: string) => {
       ? endMinutes - startMinutes
       : 24 * 60 + endMinutes - startMinutes;
 
-  return (totalMinutes / 60).toFixed(2);
+  const result =
+    parseInt((totalMinutes / 60).toFixed(1)) > 0
+      ? (totalMinutes / 60).toFixed(1)
+      : "0";
+  return result;
 };
