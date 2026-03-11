@@ -14,6 +14,7 @@ import {
   setEmployees,
   setAdminRefresh,
   setEmployeeLevels,
+  resetEmployeeInfo,
 } from "../../features/adminSlice";
 import { getAllEmployees, getEmployeeLevels } from "../../api/admin";
 
@@ -43,7 +44,7 @@ const AdminPage = () => {
   // When we refresh from any of the forms, get the updated employee list
   useEffect(() => {
     if (ctx.adminRefresh) {
-      getAllEmployees(ctx.url, ctx.token)
+      getAllEmployees(ctx.url, ctx.token, ctx.userid)
         .then((resp) => {
           const j: EmployeeListResp = resp.data;
           if (j.error === 0) {
@@ -54,6 +55,10 @@ const AdminPage = () => {
         .finally(() => dispatch(setAdminRefresh(false)));
     }
   }, [ctx.adminRefresh]);
+
+  useEffect(() => {
+    dispatch(resetEmployeeInfo());
+  }, [ctx.mainForm]);
 
   const renderForm = () => {
     switch (ctx.mainForm) {

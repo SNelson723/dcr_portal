@@ -12,6 +12,7 @@ export const useAdminCtx = () => {
     employeeLevels,
   } = useAppSelector((state) => state.admin);
   const { url, token } = useAppSelector((state) => state.app);
+  const { userid } = useAppSelector((state) => state.user);
 
   return {
     adminRefresh,
@@ -24,5 +25,6 @@ export const useAdminCtx = () => {
     selectedEmployee,
     token,
     url,
+    userid,
   };
 };

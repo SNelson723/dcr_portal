@@ -81,14 +81,14 @@ const UserGrid = () => {
           action="search"
         />
       </div>
-      <div className="grid grid-cols-2 gap-4 max-h-[70vh] overflow-hidden overflow-y-scroll no-scrollbar">
+      <div className="grid grid-cols-2 gap-4 max-h-[57.6vh] overflow-hidden overflow-y-scroll no-scrollbar">
         {filteredEmployees.map((emp, i) => (
           <div
             key={i}
             className={`${selectedBG(emp.userid)} rounded-lg shadow-md p-4 flex flex-col items-center gap-1 hover:bg-amber-100 cursor-pointer transition-colors duration-200`}
             onClick={() => handleEmployeeSelect(emp)}
           >
-            <div className="w-24 h-12 bg-indigo-200/80 rounded-full flex items-center justify-center">
+            <div className="w-28 h-12 bg-indigo-200/80 rounded-full flex items-center justify-center">
               {findEL(emp.employee_level)}
             </div>
             <div className="text-sm font-medium">{`${emp.firstname} ${emp.lastname}`}</div>

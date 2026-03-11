@@ -1,13 +1,20 @@
 import axios from "axios";
 import type { Employee } from "../interfaces/jsonResp";
 
-export const getAllEmployees = async (url: string, token: string) => {
+export const getAllEmployees = async (
+  url: string,
+  token: string,
+  userid: number,
+) => {
   const json = await axios({
     method: "GET",
     url: url + "admin/all_employees",
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
+    },
+    params: {
+      userid,
     },
   });
   return json;
@@ -82,6 +89,44 @@ export const removeEmployee = async (
     },
     url: url + `admin/remove_employee`,
     params: {
+      employee_id,
+    },
+  });
+  return json;
+};
+
+export const resetPWFlag = async (
+  url: string,
+  token: string,
+  employee_id: number,
+) => {
+  const json = await axios({
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    url: url + `admin/reset_password_flag`,
+    data: {
+      employee_id,
+    },
+  });
+  return json;
+};
+
+export const resetSQFlag = async (
+  url: string,
+  token: string,
+  employee_id: number,
+) => {
+  const json = await axios({
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    url: url + `admin/reset_security_question_flag`,
+    data: {
       employee_id,
     },
   });
