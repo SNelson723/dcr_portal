@@ -15,6 +15,7 @@ import {
   setResetSQModalOpen,
 } from "../features/securitySlice";
 import SecurityQuestion from "./security/SecurityQuestion";
+import PasswordReset from "./security/PasswordReset";
 
 const Login = () => {
   const toast = useToast();
@@ -72,6 +73,7 @@ const Login = () => {
   return (
     <div className="bg-bkg h-screen w-screen flex justify-center items-center">
       <SecurityQuestion />
+      <PasswordReset />
       <img
         src={bg}
         draggable={false}
