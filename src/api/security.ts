@@ -35,11 +35,11 @@ export const setSecurityAnswer = async (
   return json;
 };
 
-export const validateSecurityAnswer = async (
+export const validateEmployeeIdentity = async (
   url: string,
   token: string,
-  userid: number,
-  question_id: number,
+  email: string,
+  dob: string,
   answer: string,
 ) => {
   const json = await axios({
@@ -48,10 +48,10 @@ export const validateSecurityAnswer = async (
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
-    url: url + "employee/validate_security_answer",
+    url: url + "employee/validate_identity",
     params: {
-      userid,
-      question_id,
+      email,
+      dob,
       answer,
     },
   });

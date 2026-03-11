@@ -10,6 +10,9 @@ export const useSecurityCtx = () => {
     resetPWModalOpen,
     resetSQModalOpen,
     isValidatingSQ,
+    validateDOB,
+    validateEmail,
+    forgotPWFlag,
   } = useAppSelector((state) => state.security);
   const { userid, password_reset, security_question_reset } = useAppSelector(
     (state) => state.user,
@@ -18,6 +21,7 @@ export const useSecurityCtx = () => {
 
   return {
     answer,
+    forgotPWFlag,
     isValidatingSQ,
     newPwd,
     newPwdConfirm,
@@ -30,5 +34,7 @@ export const useSecurityCtx = () => {
     token,
     url,
     userid,
+    validateDOB,
+    validateEmail,
   };
 };

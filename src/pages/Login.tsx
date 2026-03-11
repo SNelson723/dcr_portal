@@ -11,6 +11,8 @@ import { login } from "../api/login";
 import type { JsonError, LoginResp } from "../interfaces/jsonResp";
 import { setIsLoggedIn, setToken } from "../features/appSlice";
 import {
+  setForgotPWFlag,
+  setIsValidingSQ,
   setResetPWModalOpen,
   setResetSQModalOpen,
 } from "../features/securitySlice";
@@ -49,7 +51,7 @@ const Login = () => {
             dispatch(setIsLoggedIn(true));
           } else if (j.user.security_question_reset === 1) {
             // We'll start with security question first
-            // Then after this process, we'll check to see 
+            // Then after this process, we'll check to see
             // if the password needs to be reset as well
             // If not => we can just log in as normal after security question reset
             dispatch(setResetSQModalOpen(true));
@@ -70,6 +72,12 @@ const Login = () => {
     }
   };
 
+  const handleForgotPWClick = () => {
+    dispatch(setForgotPWFlag(true));
+    dispatch(setIsValidingSQ(true));
+    dispatch(setResetPWModalOpen(true));
+  };
+
   return (
     <div className="bg-bkg h-screen w-screen flex justify-center items-center">
       <SecurityQuestion />
@@ -79,9 +87,9 @@ const Login = () => {
         draggable={false}
         className="bg-cover bg-center absolute inset-0 z-0 h-screen w-screen select-none cursor-default opacity-90"
       />
-      <div className="bg-bkg rounded-lg shadow-lg p-4 z-10 space-y-4 relative">
+      <div className="bg-bkg rounded-lg shadow-lg py-6 px-4 z-10 space-y-4 relative">
         <img src={logo} className="h-20 mx-auto pr-12" />
-        <div className="absolute top-[70px] w-3/4 text-right ml-1 font-medium text-blue-900">
+        <div className="absolute top-[78px] w-3/4 text-right ml-1 font-medium text-blue-900">
           Employee Portal
         </div>
         <BasicInput
@@ -100,6 +108,12 @@ const Login = () => {
         <button className="btn-themeIndigo w-full" onClick={handleLogin}>
           Sign In
         </button>
+        <div
+          className="text-[13px] font-medium absolute bottom-1 right-5 hover:text-indigo-500 cursor-pointer transition-all duration-200"
+          onClick={handleForgotPWClick}
+        >
+          Forgot Password?
+        </div>
       </div>
     </div>
   );

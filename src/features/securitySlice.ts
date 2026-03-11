@@ -10,6 +10,9 @@ interface SecurityState {
   isValidatingSQ: boolean;
   resetSQModalOpen: boolean;
   resetPWModalOpen: boolean;
+  validateEmail: string;
+  validateDOB: string;
+  forgotPWFlag: boolean;
 }
 
 const initialState: SecurityState = {
@@ -21,6 +24,9 @@ const initialState: SecurityState = {
   isValidatingSQ: false,
   resetSQModalOpen: false,
   resetPWModalOpen: false,
+  validateEmail: "",
+  validateDOB: "",
+  forgotPWFlag: false,
 };
 
 const securitySlice = createSlice({
@@ -51,6 +57,15 @@ const securitySlice = createSlice({
     setIsValidingSQ: (state, action: PayloadAction<boolean>) => {
       state.isValidatingSQ = action.payload;
     },
+    setValidateEmail: (state, action: PayloadAction<string>) => {
+      state.validateEmail = action.payload;
+    },
+    setValidateDOB: (state, action: PayloadAction<string>) => {
+      state.validateDOB = action.payload;
+    },
+    setForgotPWFlag: (state, action: PayloadAction<boolean>) => {
+      state.forgotPWFlag = action.payload;
+    },
     resetSecurityState: () => initialState,
   },
 });
@@ -65,5 +80,8 @@ export const {
   setResetPWModalOpen,
   setResetSQModalOpen,
   setIsValidingSQ,
+  setValidateDOB,
+  setValidateEmail,
+  setForgotPWFlag,
 } = securitySlice.actions;
 export default securitySlice.reducer;
