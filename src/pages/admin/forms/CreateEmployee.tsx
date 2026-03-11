@@ -18,15 +18,10 @@ import { createEmployee } from "../../../api/admin";
 import type { JsonError } from "../../../interfaces/jsonResp";
 import SingleSelect from "../../../components/inputs/SingleSelect";
 
-const userLevels = [
-  { label: "Admin", value: "admin" },
-  { label: "Employee", value: "employee" },
-];
-
 const CreateEmployee = () => {
   const toast = useToast();
   const dispatch = useAppDispatch();
-  const { employeeInfo, pw, pwConfirm, url, token } = useAdminCtx();
+  const { employeeInfo, pw, pwConfirm, url, token, employeeLevels } = useAdminCtx();
 
   const handlePWText = (text: string, action: string) => {
     if (action === "password") {
@@ -56,7 +51,6 @@ const CreateEmployee = () => {
     if (
       !employeeInfo.firstname ||
       !employeeInfo.lastname ||
-      !employeeInfo.username ||
       !employeeInfo.dcr_email ||
       !employeeInfo.role ||
       !employeeInfo.dob ||
@@ -86,7 +80,7 @@ const CreateEmployee = () => {
       .catch((err: JsonError) => toast.error(err.message));
   };
 
-  const handleULSelect = (value: string | number) => {
+  const handleELSelect = (value: string | number) => {
     dispatch(
       setEmployeeInfo({ ...employeeInfo, employee_level: Number(value) }),
     );
@@ -134,10 +128,10 @@ const CreateEmployee = () => {
           />
           <SingleSelect
             label="Employee Level"
-            data={userLevels}
-            displayKey="label"
-            valueKey="value"
-            onSelect={handleULSelect}
+            data={employeeLevels}
+            displayKey="level"
+            valueKey="id"
+            onSelect={handleELSelect}
             innerClass="py-1.5"
             className="w-full"
           />
