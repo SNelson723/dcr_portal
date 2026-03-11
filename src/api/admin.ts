@@ -64,7 +64,7 @@ export const updateEmployee = async (
       Authorization: `Bearer ${token}`,
     },
     url: url + "admin/update_employee",
-    data: user,
+    data: { ...user, password: "" },
   });
   return json;
 };

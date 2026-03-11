@@ -18,8 +18,7 @@ import UserGrid from "../components/UserGrid";
 const UpdateEmployee = () => {
   const toast = useToast();
   const dispatch = useAppDispatch();
-  const { employeeInfo, pw, pwConfirm, url, token, employeeLevels } =
-    useAdminCtx();
+  const { employeeInfo, url, token, employeeLevels } = useAdminCtx();
 
   const handleFormText = (text: string, action: string) => {
     if (action === "first_name") {
@@ -43,9 +42,7 @@ const UpdateEmployee = () => {
       !employeeInfo.lastname ||
       !employeeInfo.dcr_email ||
       !employeeInfo.role ||
-      !employeeInfo.dob ||
-      !pw ||
-      !pwConfirm
+      !employeeInfo.dob
     ) {
       return "opacity-50 pointer-events-none";
     }
@@ -72,6 +69,24 @@ const UpdateEmployee = () => {
         }
       })
       .catch((err: JsonError) => toast.error(err.message));
+  };
+
+  const defaultELQuery = () => {
+    if (employeeInfo.employee_level) {
+      return employeeLevels.filter(
+        (el) => el.id === employeeInfo.employee_level,
+      )[0].level;
+    }
+    return "";
+  };
+
+  const defaultELValue = () => {
+    if (employeeInfo.employee_level) {
+      return employeeLevels.filter(
+        (el) => el.id === employeeInfo.employee_level,
+      )[0].id;
+    }
+    return 0;
   };
 
   return (
@@ -125,6 +140,9 @@ const UpdateEmployee = () => {
             onSelect={handleELSelect}
             innerClass="py-1.5"
             className="w-full"
+            resetQuery={true}
+            defaultQuery={defaultELQuery()}
+            defaultValue={defaultELValue()}
           />
         </div>
         <div className="btn-themeAmber" onClick={handleClear}>
