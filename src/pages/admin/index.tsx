@@ -4,13 +4,18 @@ import { useAppDispatch } from "../../hooks";
 import { useToast } from "../../components/toasts/hooks/useToast";
 
 import type { MainForm } from "../../features/adminSlice";
-import type { EmployeeListResp, JsonError } from "../../interfaces/jsonResp";
+import type {
+  EmployeeLevelsResp,
+  EmployeeListResp,
+  JsonError,
+} from "../../interfaces/jsonResp";
 import {
   setMainForm,
   setEmployees,
   setAdminRefresh,
+  setEmployeeLevels,
 } from "../../features/adminSlice";
-import { getAllEmployees } from "../../api/admin";
+import { getAllEmployees, getEmployeeLevels } from "../../api/admin";
 
 // Form Components
 import CreateEmployee from "./forms/CreateEmployee";
@@ -25,7 +30,14 @@ const AdminPage = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    
+    getEmployeeLevels(ctx.url, ctx.token)
+      .then((resp) => {
+        const j: EmployeeLevelsResp = resp.data;
+        if (j.error === 0) {
+          dispatch(setEmployeeLevels(j.employee_levels));
+        }
+      })
+      .catch((err: JsonError) => toast.error(err.message));
   }, []);
 
   // When we refresh from any of the forms, get the updated employee list
@@ -66,7 +78,7 @@ const AdminPage = () => {
 
   return (
     <div className="min-h-[calc(100vh-2rem)] max-h-[calc(100vh-2rem)] overflow-hidden space-y-4">
-      <div className="bg-custom-white p-2 grid grid-cols-5 gap-2">
+      <div className="bg-custom-white p-2 grid rounded-lg grid-cols-5 gap-2">
         <button
           className={`${ctx.mainForm === 1 ? "btn-themeAmber" : "btn-themeIndigo"}`}
           onClick={() => handleFormSelect(1)}

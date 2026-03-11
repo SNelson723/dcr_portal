@@ -1,5 +1,5 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
-import type { Employee } from "../interfaces/jsonResp";
+import type { Employee, EmployeeLevel } from "../interfaces/jsonResp";
 
 export type MainForm = 0 | 1 | 2 | 3 | 4 | 5;
 
@@ -11,6 +11,7 @@ interface AdminState {
   pw: string;
   pwConfirm: string;
   selectedEmployee: Employee | null;
+  employeeLevels: EmployeeLevel[];
 }
 
 const defaultEmployee: Employee = {
@@ -19,7 +20,7 @@ const defaultEmployee: Employee = {
   lastname: "",
   role: "",
   dcr_email: "",
-  is_admin: false,
+  employee_level: 0,
   dob: "",
   password_reset: 0,
   security_question_reset: 0,
@@ -34,6 +35,7 @@ const initialState: AdminState = {
   pw: "",
   pwConfirm: "",
   selectedEmployee: defaultEmployee,
+  employeeLevels: [],
 };
 
 const adminSlice = createSlice({
@@ -74,6 +76,9 @@ const adminSlice = createSlice({
     setSelectedEmployee: (state, action: PayloadAction<Employee | null>) => {
       state.selectedEmployee = action.payload;
     },
+    setEmployeeLevels: (state, action: PayloadAction<EmployeeLevel[]>) => { 
+      state.employeeLevels = action.payload;
+    },
     resetAdminState: () => initialState,
   },
 });
@@ -89,5 +94,6 @@ export const {
   setPw,
   setPwConfirm,
   setSelectedEmployee,
+  setEmployeeLevels,
 } = adminSlice.actions;
 export default adminSlice.reducer;
