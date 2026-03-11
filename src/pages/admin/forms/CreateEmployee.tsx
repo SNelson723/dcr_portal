@@ -87,8 +87,9 @@ const CreateEmployee = () => {
   };
 
   const handleULSelect = (value: string | number) => {
-    const isAdmin = value === "admin" ? true : false;
-    dispatch(setEmployeeInfo({ ...employeeInfo, is_admin: isAdmin }));
+    dispatch(
+      setEmployeeInfo({ ...employeeInfo, employee_level: Number(value) }),
+    );
   };
 
   return (

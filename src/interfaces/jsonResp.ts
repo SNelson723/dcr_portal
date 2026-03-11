@@ -8,7 +8,7 @@ export type User = {
   lastname: string;
   role: string;
   userid: number;
-  is_admin: boolean;
+  employee_level: number;
   dob: string;
   password_reset: number;
   security_question_reset: number;
@@ -28,7 +28,7 @@ export interface Employee {
   lastname: string;
   role: string;
   dcr_email: string;
-  is_admin: boolean;
+  employee_level: number;
   dob: string;
   password_reset: number;
   security_question_reset: number;
@@ -39,4 +39,15 @@ export interface EmployeeListResp {
   error: number;
   success: boolean;
   employees: Employee[];
+}
+
+export type EmployeeLevel = {
+  id: number;
+  level: string;
+}
+
+export interface EmployeeLevelsResp {
+  error: number;
+  success: boolean;
+  employee_levels: EmployeeLevel[];
 }

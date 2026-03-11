@@ -116,7 +116,7 @@ const NavBar = () => {
   // };
 
   const adminCheck = (adminOnly: boolean) => {
-    if (adminOnly && !user.isAdmin) {
+    if (adminOnly && user.employeeLevel < 3) {
       return false;
     }
     return true;

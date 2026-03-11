@@ -13,11 +13,23 @@ export const getAllEmployees = async (url: string, token: string) => {
   return json;
 };
 
+export const getEmployeeLevels = async (url: string, token: string) => {
+  const json = await axios({
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    url: url + "admin/get_employee_levels",
+  });
+  return json;
+};
+
 export const createEmployee = async (
   url: string,
   token: string,
   user: Employee,
-  password:string,
+  password: string,
 ) => {
   const json = await axios({
     method: "POST",
@@ -32,7 +44,7 @@ export const createEmployee = async (
       userid: 0,
       role: user.role,
       dob: user.dob,
-      is_admin: user.is_admin,
+      employee_level: user.employee_level,
       dcr_email: user.dcr_email,
       password: password,
     },

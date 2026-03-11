@@ -24,6 +24,10 @@ const AdminPage = () => {
   const toast = useToast();
   const dispatch = useAppDispatch();
 
+  useEffect(() => {
+    
+  }, []);
+
   // When we refresh from any of the forms, get the updated employee list
   useEffect(() => {
     if (ctx.adminRefresh) {

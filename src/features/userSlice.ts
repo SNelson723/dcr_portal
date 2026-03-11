@@ -9,7 +9,7 @@ interface UserState {
   email: string;
   role: string;
   userid: number;
-  isAdmin: boolean;
+  employeeLevel: number;
   dob: string;
   password_reset: number;
   security_question_reset: number;
@@ -23,7 +23,7 @@ const initialState: UserState = {
   email: "",
   role: "",
   userid: 0,
-  isAdmin: false,
+  employeeLevel: 0,
   dob: "",
   password_reset: 0,
   security_question_reset: 0,
@@ -46,7 +46,7 @@ export const userSlice = createSlice({
         lastname,
         role,
         userid,
-        is_admin,
+        employee_level,
         dob,
         password_reset,
         security_question_reset,
@@ -56,7 +56,7 @@ export const userSlice = createSlice({
       state.lastName = lastname;
       state.role = role;
       state.userid = userid;
-      state.isAdmin = is_admin;
+      state.employeeLevel = employee_level;
       state.dob = dob;
       state.password_reset = password_reset;
       state.security_question_reset = security_question_reset;

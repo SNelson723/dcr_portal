@@ -71,12 +71,18 @@ const PasswordReset = () => {
         name="password"
         text={ctx.newPwd}
         setText={handlePWChange}
+        isConfirming={true}
+        leftCompare={ctx.newPwd}
+        rightCompare={ctx.newPwdConfirm}
       />
       <PWInput
         label="Confirm New Password"
         name="confirm_password"
         text={ctx.newPwdConfirm}
         setText={handlePWConfirmChange}
+        isConfirming={true}
+        leftCompare={ctx.newPwd}
+        rightCompare={ctx.newPwdConfirm}
       />
       <button
         className={`btn-themeIndigo w-full ${canSubmit()}`}
