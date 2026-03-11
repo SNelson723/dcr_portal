@@ -68,3 +68,22 @@ export const updateEmployee = async (
   });
   return json;
 };
+
+export const removeEmployee = async (
+  url: string,
+  token: string,
+  employee_id: number,
+) => {
+  const json = await axios({
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    url: url + `admin/remove_employee`,
+    params: {
+      employee_id,
+    },
+  });
+  return json;
+};
