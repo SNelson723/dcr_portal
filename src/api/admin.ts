@@ -51,3 +51,20 @@ export const createEmployee = async (
   });
   return json;
 };
+
+export const updateEmployee = async (
+  url: string,
+  token: string,
+  user: Employee,
+) => {
+  const json = await axios({
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    url: url + "admin/update_employee",
+    data: user,
+  });
+  return json;
+};
