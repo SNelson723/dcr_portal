@@ -10,6 +10,8 @@ export type User = {
   userid: number;
   is_admin: boolean;
   dob: string;
+  password_reset: number;
+  security_question_reset: number;
 };
 
 export interface LoginResp {

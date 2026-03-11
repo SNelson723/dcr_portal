@@ -11,6 +11,8 @@ interface UserState {
   userid: number;
   isAdmin: boolean;
   dob: string;
+  password_reset: number;
+  security_question_reset: number;
 }
 
 const initialState: UserState = {
@@ -23,6 +25,8 @@ const initialState: UserState = {
   userid: 0,
   isAdmin: false,
   dob: "",
+  password_reset: 0,
+  security_question_reset: 0,
 };
 
 export const userSlice = createSlice({
@@ -36,7 +40,7 @@ export const userSlice = createSlice({
       state.pwInput = action.payload;
     },
     setUserData: (state, action: PayloadAction<User>) => {
-      const { email, firstname, lastname, role, userid, is_admin, dob } =
+      const { email, firstname, lastname, role, userid, is_admin, dob, password_reset, security_question_reset } =
         action.payload;
       state.email = email;
       state.firstName = firstname;
@@ -44,7 +48,9 @@ export const userSlice = createSlice({
       state.role = role;
       state.userid = userid;
       state.isAdmin = is_admin;
-      state.dob = dob
+      state.dob = dob;
+      state.password_reset = password_reset;
+      state.security_question_reset = security_question_reset;
     },
     resetUserState: () => initialState,
   },
