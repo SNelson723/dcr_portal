@@ -44,7 +44,7 @@ const AdminPage = () => {
   // When we refresh from any of the forms, get the updated employee list
   useEffect(() => {
     if (ctx.adminRefresh) {
-      getAllEmployees(ctx.url, ctx.token, ctx.userid)
+      getAllEmployees(ctx.url, ctx.token, ctx.employeeLevel)
         .then((resp) => {
           const j: EmployeeListResp = resp.data;
           if (j.error === 0) {

@@ -12,6 +12,7 @@ interface AdminState {
   pwConfirm: string;
   selectedEmployee: Employee | null;
   employeeLevels: EmployeeLevel[];
+  isRemovingEmployee: boolean;
 }
 
 const defaultEmployee: Employee = {
@@ -36,6 +37,7 @@ const initialState: AdminState = {
   pwConfirm: "",
   selectedEmployee: defaultEmployee,
   employeeLevels: [],
+  isRemovingEmployee: false,
 };
 
 const adminSlice = createSlice({
@@ -79,6 +81,9 @@ const adminSlice = createSlice({
     setEmployeeLevels: (state, action: PayloadAction<EmployeeLevel[]>) => { 
       state.employeeLevels = action.payload;
     },
+    setIsRemovingEmployee: (state, action: PayloadAction<boolean>) => {
+      state.isRemovingEmployee = action.payload;
+    },
     resetAdminState: () => initialState,
   },
 });
@@ -94,6 +99,7 @@ export const {
   setPw,
   setPwConfirm,
   setSelectedEmployee,
+  setIsRemovingEmployee,
   setEmployeeLevels,
 } = adminSlice.actions;
 export default adminSlice.reducer;

@@ -4,7 +4,7 @@ import type { Employee } from "../interfaces/jsonResp";
 export const getAllEmployees = async (
   url: string,
   token: string,
-  userid: number,
+  employee_level: number,
 ) => {
   const json = await axios({
     method: "GET",
@@ -14,7 +14,7 @@ export const getAllEmployees = async (
       Authorization: `Bearer ${token}`,
     },
     params: {
-      userid,
+      employee_level,
     },
   });
   return json;

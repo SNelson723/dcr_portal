@@ -9,16 +9,19 @@ export const useAdminCtx = () => {
     employees,
     adminRefresh,
     selectedEmployee,
+    isRemovingEmployee,
     employeeLevels,
   } = useAppSelector((state) => state.admin);
   const { url, token } = useAppSelector((state) => state.app);
-  const { userid } = useAppSelector((state) => state.user);
+  const { userid, employeeLevel } = useAppSelector((state) => state.user);
 
   return {
     adminRefresh,
     employeeInfo,
+    employeeLevel,
     employeeLevels,
     employees,
+    isRemovingEmployee,
     mainForm,
     pw,
     pwConfirm,
