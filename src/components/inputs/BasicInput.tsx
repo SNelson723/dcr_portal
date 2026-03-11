@@ -23,9 +23,11 @@ const BasicInput = ({
 
   return (
     <div className={`${width}`}>
-      <label htmlFor={label} className="font-medium text-sm pl-1">
-        {label}
-      </label>
+      {label ? (
+        <label htmlFor={label} className="font-medium text-sm pl-1">
+          {label}
+        </label>
+      ) : null}
       <input
         data-testid={testid}
         id={label}

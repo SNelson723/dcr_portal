@@ -87,9 +87,9 @@ const CreateEmployee = () => {
   };
 
   return (
-    <div className="flex gap-4">
+    <div className="grid grid-cols-[1fr_3fr] gap-4">
       <EmployeeInfoCard />
-      <div className="bg-custom-white rounded-lg p-2 grid grid-cols-2 gap-2 shadow-md shadow-indigo-200/50 w-[44%]">
+      <div className="bg-custom-white rounded-lg p-2 grid grid-cols-2 gap-2 shadow-md shadow-indigo-200/50 w-[55%]">
         <BasicInput
           id={1}
           label="First Name"

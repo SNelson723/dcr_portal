@@ -9,7 +9,7 @@ const EmployeeInfoCard = () => {
 
 
   return (
-    <div className="bg-indigo-800 text-custom-white rounded-lg shadow-indigo-200/50 shadow-md p-2 w-1/4 flex max-h-[7.5rem]">
+    <div className="bg-indigo-800 text-custom-white rounded-lg shadow-indigo-200/50 shadow-md p-2 flex max-h-[7.5rem]">
       <UserCircleIcon className="w-24 h-24 stroke-bkg" />
       <div className="text-sm">
         <div className="flex gap-2">
