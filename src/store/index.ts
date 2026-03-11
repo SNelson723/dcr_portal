@@ -6,7 +6,7 @@ import navReducer from "../features/navSlice";
 import userReducer from "../features/userSlice";
 import tsReducer from "../features/tsSlice";
 import adminReducer from "../features/adminSlice";
-import securityReducer from "../features/security";
+import securityReducer from "../features/securitySlice";
 
 export const setupStore = () =>
   configureStore({

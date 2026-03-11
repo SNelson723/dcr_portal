@@ -139,6 +139,7 @@ const SingleSelect = <T,>({
             data-testid={`single-select-trigger-${id}`}
             ref={triggerRef}
             onClick={handleTriggerClick}
+            className="cursor-pointer"
           >
             <input
               data-testid={`single-select-input-${id}`}

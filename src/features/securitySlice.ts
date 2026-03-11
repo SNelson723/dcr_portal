@@ -7,6 +7,9 @@ interface SecurityState {
   selectedQuestionId: number;
   newPwd: string;
   newPwdConfirm: string;
+  isValidatingSQ: boolean;
+  resetSQModalOpen: boolean;
+  resetPWModalOpen: boolean;
 }
 
 const initialState: SecurityState = {
@@ -15,6 +18,9 @@ const initialState: SecurityState = {
   selectedQuestionId: 0,
   newPwd: "",
   newPwdConfirm: "",
+  isValidatingSQ: false,
+  resetSQModalOpen: false,
+  resetPWModalOpen: false,
 };
 
 const securitySlice = createSlice({
@@ -36,6 +42,15 @@ const securitySlice = createSlice({
     setNewPwdConfirm: (state, action: PayloadAction<string>) => {
       state.newPwdConfirm = action.payload;
     },
+    setResetSQModalOpen: (state, action: PayloadAction<boolean>) => {
+      state.resetSQModalOpen = action.payload;
+    },
+    setResetPWModalOpen: (state, action: PayloadAction<boolean>) => {
+      state.resetPWModalOpen = action.payload;
+    },
+    setIsValidingSQ: (state, action: PayloadAction<boolean>) => {
+      state.isValidatingSQ = action.payload;
+    },
     resetSecurityState: () => initialState,
   },
 });
@@ -47,5 +62,8 @@ export const {
   setNewPwd,
   setNewPwdConfirm,
   resetSecurityState,
+  setResetPWModalOpen,
+  setResetSQModalOpen,
+  setIsValidingSQ,
 } = securitySlice.actions;
 export default securitySlice.reducer;

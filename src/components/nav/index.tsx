@@ -21,6 +21,7 @@ import {
 import { navItems, type Navigation } from "../../features";
 import SignOutIcon from "../../icons/SignOutIcon";
 import { resetAdminState } from "../../features/adminSlice";
+import { resetSecurityState } from "../../features/securitySlice";
 
 const iconMap: Record<string, React.ComponentType<any>> = {
   home: HomeIcon,
@@ -106,6 +107,7 @@ const NavBar = () => {
     dispatch(resetTSState());
     dispatch(resetUserState());
     dispatch(resetAdminState());
+    dispatch(resetSecurityState());
   };
 
   // const itemHovering = (name: string) => {

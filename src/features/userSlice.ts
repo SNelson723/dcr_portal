@@ -40,8 +40,17 @@ export const userSlice = createSlice({
       state.pwInput = action.payload;
     },
     setUserData: (state, action: PayloadAction<User>) => {
-      const { email, firstname, lastname, role, userid, is_admin, dob, password_reset, security_question_reset } =
-        action.payload;
+      const {
+        email,
+        firstname,
+        lastname,
+        role,
+        userid,
+        is_admin,
+        dob,
+        password_reset,
+        security_question_reset,
+      } = action.payload;
       state.email = email;
       state.firstName = firstname;
       state.lastName = lastname;
@@ -52,10 +61,22 @@ export const userSlice = createSlice({
       state.password_reset = password_reset;
       state.security_question_reset = security_question_reset;
     },
+    setPWReset: (state, action: PayloadAction<number>) => {
+      state.password_reset = action.payload;
+    },
+    setSQReset: (state, action: PayloadAction<number>) => {
+      state.security_question_reset = action.payload;
+    },
     resetUserState: () => initialState,
   },
 });
 
-export const { setEmailInput, setPwInput, setUserData, resetUserState } =
-  userSlice.actions;
+export const {
+  setEmailInput,
+  setPwInput,
+  setUserData,
+  setPWReset,
+  setSQReset,
+  resetUserState,
+} = userSlice.actions;
 export default userSlice.reducer;

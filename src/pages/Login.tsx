@@ -10,6 +10,11 @@ import { setEmailInput, setPwInput, setUserData } from "../features/userSlice";
 import { login } from "../api/login";
 import type { JsonError, LoginResp } from "../interfaces/jsonResp";
 import { setIsLoggedIn, setToken } from "../features/appSlice";
+import {
+  setResetPWModalOpen,
+  setResetSQModalOpen,
+} from "../features/securitySlice";
+import SecurityQuestion from "./security/SecurityQuestion";
 
 const Login = () => {
   const toast = useToast();
@@ -30,9 +35,29 @@ const Login = () => {
       .then((resp) => {
         const j: LoginResp = resp.data;
         if (j.error === 0) {
+          // Setting the user info since the token and user id will be needed
+          // for potential password/security question reset flows
           dispatch(setToken(j.access_token));
           dispatch(setUserData(j.user));
-          dispatch(setIsLoggedIn(true));
+
+          if (
+            j.user.password_reset === 0 &&
+            j.user.security_question_reset === 0
+          ) {
+            // If neither reset is required, we can just log in as normal
+            dispatch(setIsLoggedIn(true));
+          } else if (j.user.security_question_reset === 1) {
+            // We'll start with security question first
+            // Then after this process, we'll check to see 
+            // if the password needs to be reset as well
+            // If not => we can just log in as normal after security question reset
+            dispatch(setResetSQModalOpen(true));
+          } else if (j.user.password_reset === 1) {
+            // If security question doesn't need to be reset, but password does
+            // We just skip the security question process and go straight to password reset
+            // After resetting password, we can log in as normal
+            dispatch(setResetPWModalOpen(true));
+          }
         }
       })
       .catch((err: JsonError) => toast.error(err.message));
@@ -46,6 +71,7 @@ const Login = () => {
 
   return (
     <div className="bg-bkg h-screen w-screen flex justify-center items-center">
+      <SecurityQuestion />
       <img
         src={bg}
         draggable={false}
