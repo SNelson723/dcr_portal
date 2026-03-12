@@ -79,7 +79,7 @@ const TimeSheetPage = () => {
         <WeekEnding />
         <Holidays />
       </div>
-      <div className="grid grid-cols-[25%_73.7%] gap-4">
+      <div className={`grid grid-cols-[25%_73.7%] gap-4`}>
         <RowInputCard />
         <DayRowList />
       </div>

@@ -122,12 +122,19 @@ const RowInputCard = () => {
     return "opacity-50 pointer-events-none";
   };
 
+  const canEdit = () => {
+    if (ctx.selectedWE && new Date(ctx.selectedWE.date) >= new Date(ctx.defaultSunday)) {
+      return ""
+    }
+    return "opacity-50 pointer-events-none select-none";
+  };
+
   return (
     <div className="bg-custom-white rounded-lg shadow-indigo-200/50 shadow-md p-2">
       <div className="text-sm px-2 font-medium text-content/70">
         * indicates required fields
       </div>
-      <div className="grid gap-0.5">
+      <div className={`grid gap-0.5 ${canEdit()}`}>
         <div className="grid grid-cols-2 gap-2 place-items-end">
           <SingleSelect
             id={1}

@@ -1,15 +1,28 @@
 import { useAppSelector } from "../../hooks";
+import { useTSCtx } from "./hooks";
 import DayRow from "./DayRow";
 
 const DayRowList = () => {
+  const ctx = useTSCtx();
   const { rowData, totals } = useAppSelector((state) => state.timesheet);
 
   if (rowData.length === 0 && !totals) return null;
 
+  const canEdit = () => {
+    if (
+      ctx.selectedWE &&
+      new Date(ctx.selectedWE.date) >= new Date(ctx.defaultSunday)
+    ) {
+      return "";
+    }
+    return "pointer-events-none select-none";
+  };
   return (
-    <div className="rounded-lg">
+    <div className={`rounded-lg`}>
       {/* Column Headers */}
-      <div className="grid grid-cols-10 bg-indigo-800 text-custom-white rounded-t-lg py-0.5 font-medium">
+      <div
+        className={`grid grid-cols-10 bg-indigo-800 text-custom-white rounded-t-lg py-0.5 font-medium`}
+      >
         <div className="px-2 border-r">Date</div>
         <div className="px-2 border-r">Location</div>
         <div className="px-2 border-r">Call Type</div>
@@ -23,7 +36,9 @@ const DayRowList = () => {
       </div>
 
       {/* Day Rows Body */}
-      <div className="rounded-b-lg max-h-[50vh] overflow-hidden overflow-y-auto no-scrollbar">
+      <div
+        className={`rounded-b-lg max-h-[50vh] overflow-hidden overflow-y-auto no-scrollbar ${canEdit()}`}
+      >
         {rowData.map((row) => (
           <DayRow key={row.id} data={row} />
         ))}
@@ -31,7 +46,7 @@ const DayRowList = () => {
 
       {/* Totals Footer */}
       {totals ? (
-        <div className="grid grid-cols-10 text-content font-medium">
+        <div className={`grid grid-cols-10 text-content font-medium`}>
           <div className="col-span-5"></div>
           <div className="bg-custom-white px-2 text-right border-r border border-content rounded-bl-lg">
             {totals.site}

@@ -18,6 +18,7 @@ export const useTSCtx = () => {
     siteTime,
     selectedDate,
     callType,
+    defaultSunday,
     refresh,
   } = useAppSelector((state) => state.timesheet);
   const { userid } = useAppSelector((state) => state.user);
@@ -26,6 +27,7 @@ export const useTSCtx = () => {
   return {
     callType,
     currentDays,
+    defaultSunday,
     endTime,
     refresh,
     remarks,

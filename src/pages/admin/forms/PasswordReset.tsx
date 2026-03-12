@@ -27,7 +27,7 @@ const PasswordReset = () => {
       })
       .catch((err) => toast.error(err.message));
   };
-  
+
   return (
     <div className="grid grid-cols-[1fr_3fr] gap-4">
       <div className="space-y-4">
@@ -37,16 +37,28 @@ const PasswordReset = () => {
       <div className="bg-custom-white h-[7.25rem] max-h-[7.25rem] w-[40%] rounded-lg shadow-md shadow-indigo-200/50">
         {employeeInfo.userid ? (
           <div className="flex flex-col justify-center items-center h-full text-center p-4">
-            <div>Reset password flag for <span className="font-medium">{employeeInfo.firstname} {employeeInfo.lastname}</span>?</div>
+            <div>
+              Reset password flag for{" "}
+              <span className="font-medium">
+                {employeeInfo.firstname} {employeeInfo.lastname}
+              </span>
+              ?
+            </div>
             <div className="grid grid-cols-2 gap-2 mt-2 w-[77%]">
-              <button className="btn-themeAmber w-full" onClick={handleClear}>Clear</button>
-              <button className="btn-themeIndigo w-full" onClick={handleSubmit}>Reset</button>
+              <button className="btn-themeAmber w-full" onClick={handleClear}>
+                Clear
+              </button>
+              <button className="btn-themeIndigo w-full" onClick={handleSubmit}>
+                Reset
+              </button>
             </div>
           </div>
         ) : (
-          <div className="flex justify-center items-center h-full text-center p-4 text-sm font-medium">
+          <div className="flex flex-col justify-center items-center h-full text-center p-4 text-sm font-medium">
             <div>Select an employee from the left to reset their password</div>
-            <div></div>
+            <div>
+              They will be prompted to reset it on their next login attempt
+            </div>
           </div>
         )}
       </div>

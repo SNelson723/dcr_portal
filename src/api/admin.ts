@@ -107,7 +107,7 @@ export const resetPWFlag = async (
       Authorization: `Bearer ${token}`,
     },
     url: url + `admin/reset_password_flag`,
-    data: {
+    params: {
       employee_id,
     },
   });
@@ -126,7 +126,7 @@ export const resetSQFlag = async (
       Authorization: `Bearer ${token}`,
     },
     url: url + `admin/reset_security_question_flag`,
-    data: {
+    params: {
       employee_id,
     },
   });
